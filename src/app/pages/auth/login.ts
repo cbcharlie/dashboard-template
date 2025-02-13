@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -54,7 +55,9 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
                                 </div>
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
+                            <p-button label="Sign In" styleClass="w-full" (click)="login()"></p-button>
+                             <p-button label="Logout" styleClass="w-full" (click)="logout()"></p-button>
+                              <p-button label="Test" styleClass="w-full" (click)="test()"></p-button>
                         </div>
                     </div>
                 </div>
@@ -63,9 +66,23 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
     `
 })
 export class Login {
+    constructor(private authService: AuthService) {}
     email: string = '';
 
     password: string = '';
 
     checked: boolean = false;
+
+    login() {
+        this.authService.login(this.email, this.password)
+        console.log(this.authService.isLoggedIn())
+      
+    }
+
+    logout() {
+        this.authService.logout()
+    }
+    test() {
+        console.log(this.authService.isLoggedIn())
+    }
 }
